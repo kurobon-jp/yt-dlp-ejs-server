@@ -67,7 +67,7 @@ GET /?pv=<player_version>&n=<cipher_n>&sig=<cipher_sig>
 ### 🧩 Example Request
 
 ```
-GET https://youserver.net/?pv=3d3ba064&n=ZdZIqFPQK-Ty8wId&sig=gN7a-hudCuAuPH6fByOk1_GNXN0yNMHShjZXS2VOgsEItAJz0tipeavEOmNdYN-wUtcEqD3bCXjc0iyKfAyZxCBGgIARwsSdQfJ2CJtt&s
+GET https://your-private-server.deno.dev/?pv=3d3ba064&n=ZdZIqFPQK-Ty8wId&sig=gN7a-hudCuAuPH6fByOk1_GNXN0yNMHShjZXS2VOgsEItAJz0tipeavEOmNdYN-wUtcEqD3bCXjc0iyKfAyZxCBGgIARwsSdQfJ2CJtt&s
 ```
 
 ### ✅ Example Response
