@@ -1,33 +1,34 @@
-import { getFromPrepared, preprocessPlayer } from "./vendor/ejs/src/yt/solver/solvers.ts";
+import { decrypt } from "./src/decrypt.ts";
+import { createKV } from "./src/kv.ts";
+import { getMinifyPlayer } from "./src/minifyPlayer.ts";
 
 Deno.serve(async (req) => {
-
     const url = new URL(req.url);
     const pv = url.searchParams.get("pv");
     if (pv === null || pv === "") {
         return new Response(`Missing pv param`, { status: 400 });
     }
 
-    const n = url.searchParams.get("n");
-    if (n === null || n === "") {
-        return new Response(`Missing n param`, { status: 400 });
-    }
-
-    const sig = url.searchParams.get("sig");
+    let player = "";
     try {
-        const res = await fetch(`https://www.youtube.com/s/player/${pv}/player_ias.vflset/en_US/base.js`);
-        const player = await res.text();
-        const preprocessedPlayer = preprocessPlayer(player);
-        const solvers = getFromPrepared(preprocessedPlayer);
-        const result: { [key: string]: string } = {}
-        const nSolver = solvers["n"]!;
-        const sigSolver = solvers["sig"]!;
-        result["n"] = nSolver(n);
-        if (sig !== null && sig.length > 0) {
-            result["sig"] = sigSolver(sig);
+        const kv = await createKV();
+        player = await kv.get(pv);
+        if (!player) {
+            const res = await fetch(`https://www.youtube.com/s/player/${pv}/player_ias.vflset/en_US/base.js`);
+            player = await res.text();
+            await kv.set(pv, player, 3600);
         }
-        return new Response(JSON.stringify(result));
     } catch (error) {
         return new Response(`${error}`, { status: 500 });
     }
+
+    if (url.pathname.endsWith("decrypt")) {
+        const result = decrypt(player, url.searchParams);
+        return new Response(result);
+    } else if (url.pathname.endsWith("player")) {
+        const minifyedPlayer = await getMinifyPlayer(player);
+        return new Response(minifyedPlayer);
+    }
+
+    return new Response(`Unsupported path ${url.pathname}`, { status: 400 });
 });

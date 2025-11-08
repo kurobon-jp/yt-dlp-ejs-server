@@ -67,7 +67,7 @@ GET /?pv=<player_version>&n=<cipher_n>&sig=<cipher_sig>
 ### 🧩 Example Request
 
 ```
-GET https://your-private-server.deno.dev/?pv=3d3ba064&n=ZdZIqFPQK-Ty8wId&sig=gN7a-hudCuAuPH6fByOk1_GNXN0yNMHShjZXS2VOgsEItAJz0tipeavEOmNdYN-wUtcEqD3bCXjc0iyKfAyZxCBGgIARwsSdQfJ2CJtt
+GET https://your-private-server.deno.dev/decrypt?pv=3d3ba064&n=ZdZIqFPQK-Ty8wId&sig=gN7a-hudCuAuPH6fByOk1_GNXN0yNMHShjZXS2VOgsEItAJz0tipeavEOmNdYN-wUtcEqD3bCXjc0iyKfAyZxCBGgIARwsSdQfJ2CJtt
 ```
 
 ### ✅ Example Response
@@ -99,7 +99,7 @@ deno run -A --watch server.ts
 ```
 
 Access:  
-[http://localhost:8000/?pv=test&n=abcd&sig=efgh](http://localhost:8000/?pv=test&n=abcd&sig=efgh)
+[http://localhost:8000/decrypt?pv=test&n=abcd&sig=efgh](http://localhost:8000/?pv=test&n=abcd&sig=efgh)
 
 ### Run with debugging
 
@@ -139,7 +139,7 @@ git commit -m "update ejs"
 Example use from another internal script:
 
 ```ts
-const res = await fetch("https://your-private-server.deno.dev/?pv=3d3ba064&n=abcd123&sig=xyz");
+const res = await fetch("https://your-private-server.deno.dev/decrypt?pv=3d3ba064&n=abcd123&sig=xyz");
 const data = await res.json();
 console.log(data.n, data.sig);
 ```
