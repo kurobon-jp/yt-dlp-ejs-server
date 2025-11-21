@@ -1,5 +1,10 @@
 export function gzipResponse(req: Request, content: string, contentType: string): Response {
-    const headers = new Headers({ "content-type": contentType });
+    const headers = new Headers(
+        {
+            "content-type": contentType,
+            "cache-control": "public, max-age=86400"
+        }
+    );
     if (req.headers.get("accept-encoding")?.includes("gzip")) {
         const cs = new CompressionStream("gzip");
         const writer = cs.writable.getWriter();
