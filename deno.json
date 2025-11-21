@@ -8,6 +8,6 @@
     "dev": "deno run -A --watch server.ts",
     "start": "deno run -A server.ts"
   },
-  "unstable": ["unsafe-proto", "sloppy-imports"],
+  "unstable": ["unsafe-proto", "sloppy-imports", "kv"],
   "nodeModulesDir": "auto"
 }
