@@ -1,7 +1,6 @@
 import { decrypt } from "./src/decrypt.ts";
 import { gzipResponse } from "./src/gzip.ts";
 import { getMinifyPlayer } from "./src/minifyPlayer.ts";
-import { createKV } from "./src/kv.ts";
 
 Deno.serve(async (req) => {
     const url = new URL(req.url);
@@ -13,16 +12,11 @@ Deno.serve(async (req) => {
     let player = "";
     try {
         const playerUrl = `https://www.youtube.com/s/player/${pv}/player_ias.vflset/en_US/base.js`;
-        const kv = await createKV();
-        player = await kv.get(pv);
-        if (!player) {
-            const res = await fetch(playerUrl);
-            if (res.status != 200) {
-                return new Response(`${playerUrl}\n${res.status}:${res.statusText}`, { status: res.status });
-            }
-            player = await res.text();
-            await kv.set(pv, player, 3600);
+        const res = await fetch(playerUrl);
+        if (res.status != 200) {
+            return new Response(`${playerUrl}\n${res.status}:${res.statusText}`, { status: res.status });
         }
+        player = await res.text();
     } catch (error) {
         return new Response(`${error}`, { status: 500 });
     }
