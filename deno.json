@@ -1,13 +1,24 @@
 {
   "$schema": "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json",
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "strict": true
   },
   "tasks": {
     "dev": "deno run -A --watch server.ts",
     "start": "deno run -A server.ts"
   },
-  "unstable": ["unsafe-proto", "sloppy-imports", "kv"],
+  "unstable": [
+    "unsafe-proto",
+    "sloppy-imports",
+    "kv"
+  ],
+  "imports": {
+    "esbuild": "npm:esbuild@^0.25.5"
+  },
   "nodeModulesDir": "auto"
 }

@@ -4,14 +4,14 @@ import { getMinifyPlayer } from "./src/minifyPlayer.ts";
 
 Deno.serve(async (req) => {
     const url = new URL(req.url);
-    const pv = url.searchParams.get("pv");
+    const pv = url.searchParams.get("player_id");
     if (pv === null || pv === "") {
-        return new Response(`Missing pv param`, { status: 400 });
+        return new Response(`Missing player_id param`, { status: 400 });
     }
 
     let player = "";
     try {
-        const playerUrl = `https://www.youtube.com/s/player/${pv}/player_ias.vflset/en_US/base.js`;
+        const playerUrl = `https://www.youtube.com/s/player/${pv}/player_es6.vflset/en_US/base.js`;
         const res = await fetch(playerUrl);
         if (res.status != 200) {
             return new Response(`${playerUrl}\n${res.status}:${res.statusText}`, { status: res.status });
